@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { SplashScreen } from "@/components/SplashScreen";
 import { ShareDialog } from "@/components/ShareDialog";
 import { RefreshCw, PartyPopper } from "lucide-react";
@@ -35,7 +35,7 @@ type Line = { x1: number; y1: number; x2: number; y2: number };
 function MatchGame() {
   const assetBase = import.meta.env.BASE_URL;
   const [seed, setSeed] = useState(0);
-  const lower = useMemo(() => shuffle(LETTERS.map((l) => l.toLowerCase())), [seed]);
+  const [lower, setLower] = useState<string[]>(LETTERS.map((l) => l.toLowerCase()));
   const [selectedUpper, setSelectedUpper] = useState<string | null>(null);
   const [matched, setMatched] = useState<Set<string>>(new Set());
   const [wrongPair, setWrongPair] = useState<string | null>(null);
@@ -63,6 +63,10 @@ function MatchGame() {
 
   const done = matched.size === LETTERS.length;
   const reset = () => { setMatched(new Set()); setSelectedUpper(null); setSeed((s) => s + 1); };
+
+  useEffect(() => {
+    setLower(shuffle(LETTERS.map((l) => l.toLowerCase())));
+  }, [seed]);
 
   useLayoutEffect(() => {
     const compute = () => {

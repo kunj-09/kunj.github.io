@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,11 @@ import { Share2, Copy, Check } from "lucide-react";
 
 export function ShareDialog({ path = "" }: { path?: string }) {
   const [copied, setCopied] = useState(false);
-  const url = typeof window !== "undefined" ? `${window.location.origin}${path || window.location.pathname}` : "";
+  const [url, setUrl] = useState("");
+
+  useEffect(() => {
+    setUrl(`${window.location.origin}${path || window.location.pathname}`);
+  }, [path]);
 
   const copy = async () => {
     await navigator.clipboard.writeText(url);
