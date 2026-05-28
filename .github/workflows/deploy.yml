@@ -34,7 +34,7 @@ jobs:
         run: bun run build
 
       - name: Generate GitHub Pages shell
-        run: node scripts/generate-pages-html.mjs dist/client /joy-play-teach/
+        run: node scripts/generate-pages-html.mjs dist/client /${{ github.event.repository.name }}/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
