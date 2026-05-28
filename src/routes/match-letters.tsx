@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { SplashScreen } from "@/components/SplashScreen";
 import { ShareDialog } from "@/components/ShareDialog";
-import { ArrowLeft, RefreshCw, PartyPopper } from "lucide-react";
+import { RefreshCw, PartyPopper } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { sfx } from "@/lib/sfx";
 
@@ -18,6 +18,13 @@ export const Route = createFileRoute("/match-letters")({
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 const EMOJI: Record<string, string> = { A: "🍎", B: "🦋", C: "🐱", D: "🐶", E: "🐘" };
+const ASSET_BY_LETTER: Record<string, string> = {
+  A: "apple",
+  B: "butterfly",
+  C: "cat",
+  D: "dog",
+  E: "elephant",
+};
 
 function shuffle<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5);
@@ -85,9 +92,6 @@ function MatchGame() {
     <SplashScreen duration={1500}>
       <div className="min-h-screen bg-gradient-to-b from-accent/20 via-background to-primary/10">
         <header className="flex items-center justify-between px-4 md:px-8 py-4">
-          <Button asChild variant="ghost" size="sm" className="gap-2">
-            <Link to="/"><ArrowLeft className="w-4 h-4" /> Home</Link>
-          </Button>
           <h1 className="text-xl md:text-2xl font-extrabold text-brand-navy">Match the Letters</h1>
           <div className="flex gap-2">
             <Button onClick={reset} variant="ghost" size="sm"><RefreshCw className="w-4 h-4" /></Button>
@@ -141,7 +145,17 @@ function MatchGame() {
                         "border-border bg-card hover:border-primary"
                       }`}
                     >
-                      <span className="text-3xl">{EMOJI[l]}</span>
+                      <img
+                        src={`/assets/${ASSET_BY_LETTER[l]}.png`}
+                        alt={ASSET_BY_LETTER[l]}
+                        className="w-10 h-10 object-contain"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).style.display = "none";
+                          const el = e.currentTarget.nextElementSibling as HTMLElement | null;
+                          if (el) el.style.display = "inline";
+                        }}
+                      />
+                      <span className="text-3xl" style={{ display: "none" }}>{EMOJI[l]}</span>
                       <span className="text-4xl md:text-5xl font-extrabold flex-1 text-center">{l}</span>
                     </button>
                   );
@@ -167,7 +181,17 @@ function MatchGame() {
                       }`}
                     >
                       <span className="text-4xl md:text-5xl font-extrabold flex-1 text-center">{l}</span>
-                      <span className="text-3xl">{EMOJI[upper]}</span>
+                      <img
+                        src={`/assets/${ASSET_BY_LETTER[upper]}.png`}
+                        alt={ASSET_BY_LETTER[upper]}
+                        className="w-10 h-10 object-contain"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).style.display = "none";
+                          const el = e.currentTarget.nextElementSibling as HTMLElement | null;
+                          if (el) el.style.display = "inline";
+                        }}
+                      />
+                      <span className="text-3xl" style={{ display: "none" }}>{EMOJI[upper]}</span>
                     </button>
                   );
                 })}

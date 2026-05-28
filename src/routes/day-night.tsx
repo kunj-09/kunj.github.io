@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { SplashScreen } from "@/components/SplashScreen";
 import { ShareDialog } from "@/components/ShareDialog";
-import { ArrowLeft, RefreshCw, Sun, Moon, PartyPopper, Check, X } from "lucide-react";
+import { RefreshCw, Sun, Moon, PartyPopper, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { sfx } from "@/lib/sfx";
 
@@ -94,9 +94,6 @@ function DayNightGame() {
     <SplashScreen duration={1500}>
       <div className="min-h-screen bg-gradient-to-b from-day/40 via-background to-night/30 select-none">
         <header className="flex items-center justify-between px-4 md:px-8 py-4">
-          <Button asChild variant="ghost" size="sm" className="gap-2">
-            <Link to="/"><ArrowLeft className="w-4 h-4" /> Home</Link>
-          </Button>
           <h1 className="text-xl md:text-2xl font-extrabold text-brand-navy">Day or Night?</h1>
           <div className="flex gap-2">
             <Button onClick={reset} variant="ghost" size="sm" className="gap-2"><RefreshCw className="w-4 h-4" /></Button>
